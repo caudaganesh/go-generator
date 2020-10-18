@@ -17,10 +17,10 @@ This repo contains multiple golang generators
 
 ## Flags
 ### Interface Generator
-    -c, --comment string   comment for unit test generator
-    -f, --file string      file path unit test generator
+    -c, --comment string   comment for the generated interface
+    -f, --file string      file path of the target struct
     -h, --help             help for interface
-    -n, --name string      name for interface generator
+    -n, --name string      name for the generated interface
     -o, --output string    destination output of the result
     -p, --pkgName string   package name for the generated interface
     -r, --target string    target struct for interface generator

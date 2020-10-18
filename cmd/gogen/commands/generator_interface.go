@@ -16,9 +16,9 @@ func init() {
 }
 
 func addInterfaceFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("file", "f", "", "file path unit test generator")
-	cmd.Flags().StringP("comment", "c", "", "comment for unit test generator")
-	cmd.Flags().StringP("name", "n", "", "name for interface generator")
+	cmd.Flags().StringP("file", "f", "", "file path of the target struct")
+	cmd.Flags().StringP("comment", "c", "", "comment for the generated interface")
+	cmd.Flags().StringP("name", "n", "", "name for the generated interface")
 	cmd.Flags().StringP("target", "r", "", "target struct for interface generator")
 	cmd.Flags().StringP("pkgName", "p", "", "package name for the generated interface")
 	cmd.MarkFlagRequired("target")
