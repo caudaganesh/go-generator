@@ -21,7 +21,7 @@ func MakeProto(pkgName, goPackage, name string, properties []string) ([]byte, er
 
 	package {{.PackageName}};
 
-	option go_package = {{.GoPackage}};
+	{{if .GoPackage}}option go_package = {{.GoPackage}};{{end}}
 
 	message {{.Name}} {
 		{{range $_, $prop := .Properties}}
