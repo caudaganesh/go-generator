@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/caudaganesh/go-generator)](https://goreportcard.com/report/github.com/caudaganesh/go-generator)
+[![codecov](https://codecov.io/gh/caudaganesh/go-generator/branch/master/graph/badge.svg?token=TJXKV5O5EL)](https://codecov.io/gh/caudaganesh/go-generator)
 
 # go-generator
 
