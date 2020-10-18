@@ -1,0 +1,41 @@
+package usecase
+
+import (
+	"context"
+
+	"github.com/caudaganesh/go-generator/example/entity"
+)
+
+// ProductUC holds all product usecase related properties
+type ProductUC struct {
+}
+
+// NewProductUC init new product usecase
+func NewProductUC() *ProductUC {
+	return &ProductUC{}
+}
+
+// GetProducts get list of product
+func (p *ProductUC) GetProducts(c context.Context) ([]entity.Product, error) {
+	return nil, nil
+}
+
+// GetProduct get one product
+func (p *ProductUC) GetProduct(c context.Context) (entity.Product, error) {
+	return entity.Product{}, nil
+}
+
+// AddProduct add new product
+func (p *ProductUC) AddProduct(c context.Context, req entity.Product) error {
+	return nil
+}
+
+// UpdateProduct update existing product
+func (p *ProductUC) UpdateProduct(c context.Context, req entity.Product) error {
+	return nil
+}
+
+// DeleteProduct will delete existing product
+func (p *ProductUC) DeleteProduct(c context.Context, req entity.Product) error {
+	return nil
+}
