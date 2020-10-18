@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/caudaganesh/go-generator/constant"
 	"github.com/caudaganesh/go-generator/runner"
@@ -21,6 +22,11 @@ func Write(oPath string, out io.Reader, action string) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		if !strings.Contains(oPath, ".go") {
+			return
+		}
+
 		err = runner.GoImports(oPath)
 		if err != nil {
 			log.Fatal(err)

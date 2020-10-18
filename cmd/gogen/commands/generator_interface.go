@@ -11,6 +11,7 @@ import (
 
 func init() {
 	rootCmd.AddCommand(createInterfaceCmd)
+	addGlobalFlags(createInterfaceCmd)
 	addInterfaceFlags(createInterfaceCmd)
 }
 
@@ -20,7 +21,6 @@ func addInterfaceFlags(cmd *cobra.Command) {
 	cmd.Flags().StringP("name", "n", "", "name for interface generator")
 	cmd.Flags().StringP("target", "r", "", "target struct for interface generator")
 	cmd.Flags().StringP("pkgName", "p", "", "package name for the generated interface")
-	cmd.Flags().StringP("output", "o", "", "destination output of the result")
 	cmd.MarkFlagRequired("target")
 	cmd.MarkFlagRequired("pkgName")
 	cmd.MarkFlagRequired("file")
@@ -31,7 +31,7 @@ var createInterfaceCmd = &cobra.Command{
 	Use:     "interface",
 	Short:   "Generate an interface",
 	Long:    `Generate an interface`,
-	Example: `gospore interface -p="usecase" -f="resultexample/basic/usecase/product_impl.go" -r="ProductUC" -n="ProductUseCase" -c="ProductUseCase comments" -o="resultexample/basic/usecase/product"`,
+	Example: `gogen interface -p=usecase -f=example/usecase/product.go -r=ProductUC -n=ProductUseCase -c="ProductUseCase comments" -o=example/usecase/product_intf`,
 	Run: func(cmd *cobra.Command, args []string) {
 		pkgName, _ := cmd.Flags().GetString("pkgName")
 		output, _ := cmd.Flags().GetString("output")

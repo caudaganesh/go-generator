@@ -1,0 +1,22 @@
+package usecase
+
+import (
+	"context"
+
+	"github.com/caudaganesh/go-generator/example/entity"
+)
+
+// ProductUseCase comments
+type ProductUseCase interface {
+
+	// GetProducts get list of product
+	GetProducts(c context.Context) ([]entity.Product, error)
+	// GetProduct get one product
+	GetProduct(c context.Context) (entity.Product, error)
+	// AddProduct add new product
+	AddProduct(c context.Context, req entity.Product) error
+	// UpdateProduct update existing product
+	UpdateProduct(c context.Context, req entity.Product) error
+	// DeleteProduct will delete existing product
+	DeleteProduct(c context.Context, req entity.Product) error
+}

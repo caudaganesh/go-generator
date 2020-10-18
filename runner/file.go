@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-const fileFullPath = "tmp_gogen/main.go"
+const fileFullPath = "tmp-gogen/main.go"
 
 func GetFullPath() string {
 	return fileFullPath
