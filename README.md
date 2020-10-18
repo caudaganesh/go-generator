@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/caudaganesh/go-generator)](https://goreportcard.com/report/github.com/caudaganesh/go-generator)
+
 # go-generator
 
 ## Introduction
