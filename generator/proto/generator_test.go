@@ -13,17 +13,17 @@ func TestGenerate(t *testing.T) {
 	opt := Options{
 		File:         file,
 		TargetStruct: "Product",
-		PackageName:  "productproto",
+		PackageName:  "proto",
 		Name:         "Product",
-		GoPackage:    "./productproto",
+		GoPackage:    "./proto",
 	}
 	got, _ := Generate(opt)
 	want := `
 	syntax="proto3";
 
-	package productproto;
+	package proto;
 
-	option go_package = ./productproto;
+	option go_package = ./proto;
 
 	message Product {
 		

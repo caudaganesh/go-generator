@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/caudaganesh/go-generator/tool"
+	"github.com/caudaganesh/go-generator/types"
 	"github.com/iancoleman/strcase"
 )
 
@@ -60,7 +60,7 @@ func getAllProperties(fields []*ast.Field) []string {
 func transformFieldTypeToProtoType(fieldType interface{}) string {
 	switch ft := fieldType.(type) {
 	case *ast.Ident:
-		if !tool.IsPrimitives(ft.Name) {
+		if !types.IsPrimitives(ft.Name) {
 			ts, ok := ft.Obj.Decl.(*ast.TypeSpec)
 			if ok {
 				ident, ok := ts.Type.(*ast.Ident)
@@ -70,18 +70,10 @@ func transformFieldTypeToProtoType(fieldType interface{}) string {
 			}
 		}
 
-		switch ft.Name {
-		case "int":
-			return "int64"
-		case "float64", "float32":
-			return "double"
-		default:
-			return ft.Name
-		}
+		return TransformTypeToPtype(ft.Name)
+
 	case *ast.SelectorExpr:
-		if ft.X.(*ast.Ident).Name == "time" {
-			return "google.protobuf.Timestamp"
-		}
+		return TransformTypeToPtype(ft.X.(*ast.Ident).Name)
 	}
 
 	return ""
