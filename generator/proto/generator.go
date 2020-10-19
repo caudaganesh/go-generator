@@ -48,6 +48,20 @@ func parseStruct(src []byte, structName string, pkgName string) (res []*ast.Fiel
 
 	return
 }
+
+func getGenDecl(src []byte, fl interface{}) (string, *ast.GenDecl) {
+	gd, ok := fl.(*ast.GenDecl)
+	if !ok {
+		return "", nil
+	}
+	t, ok := gd.Specs[0].(*ast.TypeSpec)
+	if !ok {
+		return "", nil
+	}
+
+	return t.Name.Name, gd
+}
+
 func getAllProperties(fields []*ast.Field) []string {
 	res := []string{}
 	for idx, field := range fields {
@@ -77,17 +91,4 @@ func transformFieldTypeToProtoType(fieldType interface{}) string {
 	}
 
 	return ""
-}
-
-func getGenDecl(src []byte, fl interface{}) (string, *ast.GenDecl) {
-	gd, ok := fl.(*ast.GenDecl)
-	if !ok {
-		return "", nil
-	}
-	t, ok := gd.Specs[0].(*ast.TypeSpec)
-	if !ok {
-		return "", nil
-	}
-
-	return t.Name.Name, gd
 }
