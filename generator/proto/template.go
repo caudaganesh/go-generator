@@ -17,18 +17,17 @@ type templateParam struct {
 // MakeProto takes in all of the fields and parse it to proto
 func MakeProto(pkgName, goPackage, name string, properties []string) ([]byte, error) {
 	baseTemplate := `
-	syntax="proto3";
+syntax="proto3";
 
-	package {{.PackageName}};
+package {{.PackageName}};
 
-	{{if .GoPackage}}option go_package = {{.GoPackage}};{{end}}
+{{if .GoPackage}}option go_package = {{.GoPackage}};{{end}}
 
-	message {{.Name}} {
-		{{range $_, $prop := .Properties}}
-		{{$prop}}
-		{{- end}}
-	}
-	`
+message {{.Name}} {
+	{{range $_, $prop := .Properties}}
+	{{$prop}}
+	{{- end}}
+}`
 
 	tmpl := template.Must(template.New("proto").Parse(baseTemplate))
 	var buf bytes.Buffer

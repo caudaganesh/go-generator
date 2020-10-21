@@ -17,23 +17,27 @@ func init() {
 
 func addInterfaceFlags(cmd *cobra.Command) {
 	cmd.Flags().StringP("file", "f", "", "file path of the target struct")
+	cmd.Flags().StringP("pkg", "p", "", "package of the target struct")
 	cmd.Flags().StringP("comment", "c", "", "comment for the generated interface")
 	cmd.Flags().StringP("name", "n", "", "name for the generated interface")
 	cmd.Flags().StringP("target", "r", "", "target struct for interface generator")
-	cmd.Flags().StringP("pkgName", "p", "", "package name for the generated interface")
+	cmd.Flags().StringP("pkgName", "e", "", "package name for the generated interface")
 	cmd.MarkFlagRequired("target")
 	cmd.MarkFlagRequired("pkgName")
-	cmd.MarkFlagRequired("file")
 	cmd.MarkFlagRequired("name")
 }
 
 var createInterfaceCmd = &cobra.Command{
-	Use:     "interface",
-	Short:   "Generate an interface",
-	Long:    `Generate an interface`,
-	Example: `gogen interface -p=usecase -f=example/usecase/product.go -r=ProductUC -n=ProductUseCase -c="ProductUseCase comments" -o=example/usecase/product_intf`,
+	Use:   "interface",
+	Short: "Generate an interface",
+	Long:  `Generate an interface`,
+	Example: `
+	gogen interface -e=usecase -f=example/usecase/product.go -r=ProductUC -n=ProductUseCase -c="ProductUseCase comments" -o=example/usecase/product_intf
+	gogen interface -e=usecase -p=github.com/caudaganesh/go-generator/example/usecase -r=ProductUC -n=ProductUseCase -c="ProductUseCase comments" -o=example/usecase/product_intf
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		pkgName, _ := cmd.Flags().GetString("pkgName")
+		pkg, _ := cmd.Flags().GetString("pkg")
 		output, _ := cmd.Flags().GetString("output")
 		file, _ := cmd.Flags().GetString("file")
 		target, _ := cmd.Flags().GetString("target")
@@ -48,6 +52,7 @@ var createInterfaceCmd = &cobra.Command{
 			TargetStruct: target,
 			Name:         name,
 			Comment:      comment,
+			Package:      pkg,
 		})
 		if err != nil {
 			log.Fatal(err)

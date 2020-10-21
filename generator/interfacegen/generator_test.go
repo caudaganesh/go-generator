@@ -1,16 +1,15 @@
 package interfacegen
 
 import (
-	"fmt"
 	"testing"
 
+	"github.com/caudaganesh/go-generator/testhelper"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGenerate(t *testing.T) {
-	file := "../../example/usecase/product.go"
+func TestGenerateWithPackage(t *testing.T) {
 	opts := Options{
-		File:         file,
+		Package:      "github.com/caudaganesh/go-generator/example/usecase",
 		TargetStruct: "ProductUC",
 		PackageName:  "usecase",
 		Name:         "ProductUseCase",
@@ -18,29 +17,21 @@ func TestGenerate(t *testing.T) {
 	}
 
 	got, _ := Generate(opts)
-	fmt.Println(string(got))
-	want := `package usecase
 
-import (
-	"context"
-
-	"github.com/caudaganesh/go-generator/example/entity"
-)
-
-// ProductUseCase holds product use case methods
-type ProductUseCase interface {
-
-	// GetProducts get list of product
-	GetProducts(c context.Context) ([]entity.Product, error)
-	// GetProduct get one product
-	GetProduct(c context.Context) (entity.Product, error)
-	// AddProduct add new product
-	AddProduct(c context.Context, req entity.Product) error
-	// UpdateProduct update existing product
-	UpdateProduct(c context.Context, req entity.Product) error
-	// DeleteProduct will delete existing product
-	DeleteProduct(c context.Context, req entity.Product) error
+	want := testhelper.GetExpectFromFile("./expect.txt")
+	assert.Equal(t, want, string(got))
 }
-`
+
+func TestGenerateWithFile(t *testing.T) {
+	opts := Options{
+		File:         "../../example/usecase/product.go",
+		TargetStruct: "ProductUC",
+		PackageName:  "usecase",
+		Name:         "ProductUseCase",
+		Comment:      "ProductUseCase holds product use case methods",
+	}
+
+	got, _ := Generate(opts)
+	want := testhelper.GetExpectFromFile("./expect.txt")
 	assert.Equal(t, want, string(got))
 }

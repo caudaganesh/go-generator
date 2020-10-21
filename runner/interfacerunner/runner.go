@@ -10,6 +10,7 @@ import (
 type InterfaceGenConf struct {
 	PackageName  string
 	File         string
+	Package      string
 	TargetStruct string
 	Name         string
 	Comment      string
@@ -18,6 +19,7 @@ type InterfaceGenConf struct {
 func Run(conf InterfaceGenConf) (io.Reader, error) {
 	opt := interfacegen.Options{
 		File:         conf.File,
+		Package:      conf.Package,
 		TargetStruct: conf.TargetStruct,
 		PackageName:  conf.PackageName,
 		Name:         conf.Name,

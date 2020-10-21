@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/caudaganesh/go-generator/testhelper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,24 +19,8 @@ func TestGenerate(t *testing.T) {
 		GoPackage:    "./proto",
 	}
 	got, _ := Generate(opt)
-	want := `
-	syntax="proto3";
-
-	package proto;
-
-	option go_package = ./proto;
-
-	message Product {
-		
-		int64 id = 1;
-		string name = 2;
-		bool active = 3;
-		double discount = 4;
-		int64 price = 5;
-		google.protobuf.Timestamp created_at = 6;
-		int64 product_status = 7;
-	}
-	`
+	want := testhelper.GetExpectFromFile("./expect.txt")
 	assert.Equal(t, want, string(got))
-	fmt.Println(string(got))
+	fmt.Println(string(want))
+
 }

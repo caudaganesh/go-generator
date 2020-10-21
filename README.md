@@ -25,7 +25,8 @@ This repo contains multiple golang generators
     -h, --help             help for interface
     -n, --name string      name for the generated interface
     -o, --output string    destination output of the result
-    -p, --pkgName string   package name for the generated interface
+    -p, --pkg string       package of the target struct
+    -e, --pkgName string   package name for the generated interface
     -r, --target string    target struct for interface generator
 
 ### Proto Generator
