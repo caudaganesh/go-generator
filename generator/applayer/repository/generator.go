@@ -1,7 +1,8 @@
-package usecase
+package repository
 
 import (
 	"bytes"
+	"fmt"
 	"html"
 	"html/template"
 	"log"
@@ -17,35 +18,41 @@ type Options struct {
 	Entity  string
 }
 
-type UseCaseGen struct {
+type RepoGen struct {
 	EntityPackage     string
 	EntityPackageName string
 	Entity            string
 	EntityWithSpace   string
+	TableName         string
 	Struct            *structtype.StructType
-	config.UseCaseConfig
+	PropToTag         structtype.PropToTag
+	PropToType        structtype.PropToType
+	config.RepositoryConfig
 }
 
-func NewUseCaseGen(
+func NewRepoGen(
 	opt Options,
-	ucConf config.UseCaseConfig,
+	repoConf config.RepositoryConfig,
 	pkg *packages.Package,
 	str *structtype.StructType,
-) *UseCaseGen {
+) *RepoGen {
 
-	return &UseCaseGen{
+	return &RepoGen{
 		EntityPackage:     pkg.ID,
 		EntityPackageName: pkg.Types.Name(),
 		Entity:            opt.Entity,
 		EntityWithSpace:   strcase.ToDelimited(opt.Entity, ' '),
+		TableName:         fmt.Sprintf(repoConf.TableFormat, strcase.ToSnake(opt.Entity)),
 		Struct:            str,
-		UseCaseConfig:     ucConf,
+		RepositoryConfig:  repoConf,
+		PropToTag:         str.GetPropToTag(repoConf.ReferenceTag),
+		PropToType:        str.GetPropToType(),
 	}
 }
 
-// Generate takes in all of the fields and generate the use case
-func (t *UseCaseGen) Generate(baseTemplate string) ([]byte, error) {
-	tmpl := template.Must(template.New("usecase").Parse(baseTemplate))
+// Generate takes in all of the fields and generate the repo
+func (t *RepoGen) Generate(baseTemplate string) ([]byte, error) {
+	tmpl := template.Must(template.New("repo").Parse(baseTemplate))
 	var buf bytes.Buffer
 	err := tmpl.Execute(&buf, t)
 	if err != nil {

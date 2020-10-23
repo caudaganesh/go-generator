@@ -1,0 +1,59 @@
+package repository
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/caudaganesh/go-generator/example/entity"
+)
+
+// ProductRepo holds all product repository related properties
+type ProductRepo struct{}
+
+// NewProductRepo init new product repository
+func NewProductRepo() *ProductRepo {
+	return &ProductRepo{}
+}
+
+// GetProducts get list of product
+func (p *ProductRepo) GetProducts(c context.Context) ([]entity.Product, error) {
+	var res []entity.Product
+
+	q := `
+	SELECT
+		active,
+		created_at,
+		discount,
+		id,
+		name,
+		price,
+		status,
+	FROM
+		tbl_product
+	`
+
+	fmt.Println(q)
+
+	return res, nil
+}
+
+// GetProduct get one product
+func (p *ProductRepo) GetProduct(c context.Context) (entity.Product, error) {
+	res := entity.Product{}
+	return res, nil
+}
+
+// AddProduct add new product
+func (p *ProductRepo) AddProduct(c context.Context, req entity.Product) error {
+	return nil
+}
+
+// UpdateProduct update existing product
+func (p *ProductRepo) UpdateProduct(c context.Context, req entity.Product) error {
+	return nil
+}
+
+// DeleteProduct will delete existing product
+func (p *ProductRepo) DeleteProduct(c context.Context, req entity.Product) error {
+	return nil
+}

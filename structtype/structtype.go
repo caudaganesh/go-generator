@@ -1,8 +1,16 @@
 package structtype
 
-import "go/ast"
+import (
+	"go/ast"
+	"reflect"
+	"strings"
 
-func GetFromDeclsByName(decls []ast.Decl, name string) *ast.StructType {
+	"github.com/caudaganesh/go-generator/types"
+)
+
+type StructType struct{ *ast.StructType }
+
+func GetFromDeclsByName(decls []ast.Decl, name string) *StructType {
 	var str *ast.StructType
 	for _, decl := range decls {
 		gd, ok := decl.(*ast.GenDecl)
@@ -22,5 +30,30 @@ func GetFromDeclsByName(decls []ast.Decl, name string) *ast.StructType {
 
 	}
 
-	return str
+	return &StructType{StructType: str}
+}
+
+func (s *StructType) GetPropToTag(tag string) PropToTag {
+	res := make(PropToTag, len(s.Fields.List))
+	for _, f := range s.Fields.List {
+		tagValue := f.Tag.Value
+		tagValue = strings.Trim(tagValue, "`")
+		structTag := reflect.StructTag(tagValue)
+		tagValue = structTag.Get(tag)
+		res[f.Names[0].Name] = tagValue
+	}
+
+	return res
+}
+
+func (s *StructType) GetPropToType() PropToType {
+	res := make(PropToType, len(s.Fields.List))
+	for _, f := range s.Fields.List {
+		switch t := f.Type.(type) {
+		case *ast.Ident:
+			res[f.Names[0].Name] = types.GetPrimitiveType(t.Name, t.Obj)
+		}
+	}
+
+	return res
 }

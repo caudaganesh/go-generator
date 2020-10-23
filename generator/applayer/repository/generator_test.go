@@ -1,4 +1,4 @@
-package usecase
+package repository
 
 import (
 	"fmt"
@@ -16,23 +16,24 @@ import (
 func TestGenerate(t *testing.T) {
 	pkgPath := "github.com/caudaganesh/go-generator/example/entity"
 	entity := "Product"
+	repoConf := config.GetRepositoryConfig()
 
 	pkg, decls := pkgloader.LoadPackageDecls(pkgPath)
 	str := structtype.GetFromDeclsByName(decls, entity)
-	ucConf := config.GetUseCaseConfig()
-	ucConf.TemplatePath = "../../../example/template/usecase.tmpl"
-	baseTemplate, err := ioutil.ReadFile(ucConf.TemplatePath)
+
+	repoConf.TemplatePath = "../../../example/template/repo.tmpl"
+	baseTemplate, err := ioutil.ReadFile(repoConf.TemplatePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	bt := string(baseTemplate)
 
-	ucGen := NewUseCaseGen(
+	ucGen := NewRepoGen(
 		Options{
 			Package: pkgPath,
 			Entity:  entity,
 		},
-		ucConf,
+		repoConf,
 		pkg,
 		str,
 	)

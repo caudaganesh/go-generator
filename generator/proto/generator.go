@@ -74,17 +74,8 @@ func getAllProperties(fields []*ast.Field) []string {
 func transformFieldTypeToProtoType(fieldType interface{}) string {
 	switch ft := fieldType.(type) {
 	case *ast.Ident:
-		if !types.IsPrimitives(ft.Name) {
-			ts, ok := ft.Obj.Decl.(*ast.TypeSpec)
-			if ok {
-				ident, ok := ts.Type.(*ast.Ident)
-				if ok {
-					ft.Name = ident.Name
-				}
-			}
-		}
-
-		return TransformTypeToPtype(ft.Name)
+		typ := types.GetPrimitiveType(ft.Name, ft.Obj)
+		return TransformTypeToPtype(typ)
 
 	case *ast.SelectorExpr:
 		return TransformTypeToPtype(ft.X.(*ast.Ident).Name)

@@ -1,5 +1,7 @@
 package types
 
+import "go/ast"
+
 const (
 	String     = "string"
 	Complex64  = "complex64"
@@ -48,4 +50,27 @@ func IsPrimitives(val string) bool {
 	}
 
 	return false
+}
+
+// GetPrimitiveType will return the primitive type if possible, if not just return the type
+func GetPrimitiveType(typ string, obj *ast.Object) string {
+	if obj == nil {
+		return typ
+	}
+
+	if IsPrimitives(typ) {
+		return typ
+	}
+
+	ts, ok := obj.Decl.(*ast.TypeSpec)
+	if !ok {
+		return typ
+	}
+
+	ident, ok := ts.Type.(*ast.Ident)
+	if ok {
+		return ident.Name
+	}
+
+	return typ
 }
