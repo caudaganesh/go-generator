@@ -13,5 +13,5 @@ message Product {
 	double discount = 4;
 	int64 price = 5;
 	google.protobuf.Timestamp created_at = 6;
-	int64 product_status = 7;
+	int64 status = 7;
 }

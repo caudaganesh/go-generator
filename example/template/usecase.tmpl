@@ -1,0 +1,40 @@
+package {{.PackageName}}
+
+import (
+	"{{.EntityPackage}}"
+)
+
+// {{.Entity}}{{.StructSuffix}} holds all {{.EntityWithSpace}} {{.PackageName}} related properties
+type {{.Entity}}{{.StructSuffix}} struct {}
+
+// New{{.Entity}}{{.StructSuffix}} init new {{.EntityWithSpace}} {{.PackageName}}
+func New{{.Entity}}{{.StructSuffix}}() *{{.Entity}}{{.StructSuffix}} {
+	return &{{.Entity}}{{.StructSuffix}}{}
+}
+
+// Get{{.Entity}}s get list of {{.EntityWithSpace}}
+func (p *{{.Entity}}{{.StructSuffix}}) Get{{.Entity}}s(c {{.ContextPackageName}}.Context) ([]{{.EntityPackageName}}.{{.Entity}}, error) {
+	var res []{{.EntityPackageName}}.{{.Entity}}
+	return res, nil
+}
+
+// Get{{.Entity}} get one {{.EntityWithSpace}}
+func (p *{{.Entity}}{{.StructSuffix}}) Get{{.Entity}}(c {{.ContextPackageName}}.Context) ({{.EntityPackageName}}.{{.Entity}}, error) {
+	res := {{.EntityPackageName}}.{{.Entity}}{}
+	return res, nil
+}
+
+// Add{{.Entity}} add new {{.EntityWithSpace}}
+func (p *{{.Entity}}{{.StructSuffix}}) Add{{.Entity}}(c {{.ContextPackageName}}.Context, req {{.EntityPackageName}}.{{.Entity}}) error {
+    return nil
+}
+
+// Update{{.Entity}} update existing {{.EntityWithSpace}}
+func (p *{{.Entity}}{{.StructSuffix}}) Update{{.Entity}}(c {{.ContextPackageName}}.Context, req {{.EntityPackageName}}.{{.Entity}}) error {
+    return nil
+}
+
+// Delete{{.Entity}} will delete existing {{.EntityWithSpace}}
+func (p *{{.Entity}}{{.StructSuffix}}) Delete{{.Entity}}(c {{.ContextPackageName}}.Context, req {{.EntityPackageName}}.{{.Entity}}) error {
+    return nil
+}
