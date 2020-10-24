@@ -1,4 +1,4 @@
-package repository
+package delivery
 
 import (
 	"bytes"
@@ -27,12 +27,13 @@ type Gen struct {
 	Struct            *structtype.StructType
 	PropToTag         structtype.PropToTag
 	PropToType        structtype.PropToType
-	config.RepositoryConfig
+	PropToCamel       structtype.PropToCamel
+	config.DeliveryConfig
 }
 
 func NewGen(
 	opt Options,
-	repoConf config.RepositoryConfig,
+	cfg config.DeliveryConfig,
 	pkg *packages.Package,
 	str *structtype.StructType,
 ) *Gen {
@@ -42,17 +43,18 @@ func NewGen(
 		EntityPackageName: pkg.Types.Name(),
 		Entity:            opt.Entity,
 		EntityWithSpace:   strcase.ToDelimited(opt.Entity, ' '),
-		TableName:         fmt.Sprintf(repoConf.TableFormat, strcase.ToSnake(opt.Entity)),
+		TableName:         fmt.Sprintf(cfg.TableFormat, strcase.ToSnake(opt.Entity)),
 		Struct:            str,
-		RepositoryConfig:  repoConf,
-		PropToTag:         str.GetPropToTag(repoConf.ReferenceTag),
+		DeliveryConfig:    cfg,
+		PropToTag:         str.GetPropToTag(cfg.ReferenceTag),
 		PropToType:        str.GetPropToType(),
+		PropToCamel:       str.GetPropToCamel(),
 	}
 }
 
 // Generate takes in all of the fields and generate the repo
 func (g *Gen) Generate(baseTemplate string) ([]byte, error) {
-	tmpl := template.Must(template.New("repo").Parse(baseTemplate))
+	tmpl := template.Must(template.New("delivery").Parse(baseTemplate))
 	var buf bytes.Buffer
 	err := tmpl.Execute(&buf, g)
 	if err != nil {

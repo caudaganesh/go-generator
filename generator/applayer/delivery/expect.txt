@@ -1,0 +1,65 @@
+package repository
+
+import (
+	"github.com/caudaganesh/go-generator/example/entity"
+)
+
+// ProductDlv holds all product repository related properties
+type ProductDlv struct {}
+
+// NewProductDlv init new product repository
+func NewProductDlv() *ProductDlv {
+	return &ProductDlv{}
+}
+
+// GetProducts get list of product
+func (p *ProductDlv) GetProducts(c context.Context) ([]entity.Product, error) {
+	var res []entity.Product
+	qs := map[string]string{}
+
+	
+	active := qs["active"]
+	fmt.Println(active)
+	
+	createdAt := qs["created_at"]
+	fmt.Println(createdAt)
+	
+	discount := qs["discount"]
+	fmt.Println(discount)
+	
+	id := qs["id"]
+	fmt.Println(id)
+	
+	name := qs["name"]
+	fmt.Println(name)
+	
+	price := qs["price"]
+	fmt.Println(price)
+	
+	status := qs["status"]
+	fmt.Println(status)
+	
+
+	return res, nil
+}
+
+// GetProduct get one product
+func (p *ProductDlv) GetProduct(c context.Context) (entity.Product, error) {
+	res := entity.Product{}
+	return res, nil
+}
+
+// AddProduct add new product
+func (p *ProductDlv) AddProduct(c context.Context, req entity.Product) error {
+    return nil
+}
+
+// UpdateProduct update existing product
+func (p *ProductDlv) UpdateProduct(c context.Context, req entity.Product) error {
+    return nil
+}
+
+// DeleteProduct will delete existing product
+func (p *ProductDlv) DeleteProduct(c context.Context, req entity.Product) error {
+    return nil
+}

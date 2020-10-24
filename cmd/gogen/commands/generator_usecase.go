@@ -15,25 +15,25 @@ func init() {
 }
 
 func addUCFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("pkg", "p", "", "package to entity")
-	cmd.Flags().StringP("entity", "e", "", "target entity")
+	cmd.Flags().StringP("pkg", "p", "", "package containing struct")
+	cmd.Flags().StringP("target", "r", "", "target struct")
 	cmd.MarkFlagRequired("pkg")
-	cmd.MarkFlagRequired("entity")
+	cmd.MarkFlagRequired("target")
 }
 
 var createUCCmd = &cobra.Command{
 	Use:     "usecase",
 	Short:   "Generate a usecase",
 	Long:    `Generate a usecase`,
-	Example: `gogen usecase -p=github.com/caudaganesh/go-generator/example/entity -e=Product -o=example/usecase/product`,
+	Example: `gogen usecase -p=github.com/caudaganesh/go-generator/example/entity -r=Product -o=example/usecase/product`,
 	Run: func(cmd *cobra.Command, args []string) {
 		pkg, _ := cmd.Flags().GetString("pkg")
-		entity, _ := cmd.Flags().GetString("entity")
+		target, _ := cmd.Flags().GetString("target")
 		output, _ := cmd.Flags().GetString("output")
 
-		out, err := usecaserunner.Run(usecaserunner.UCGenConf{
+		out, err := usecaserunner.Run(usecaserunner.Conf{
 			Package: pkg,
-			Entity:  entity,
+			Entity:  target,
 		})
 		if err != nil {
 			log.Fatal(err)

@@ -16,29 +16,29 @@ import (
 func TestGenerate(t *testing.T) {
 	pkgPath := "github.com/caudaganesh/go-generator/example/entity"
 	entity := "Product"
-	repoConf := config.GetRepositoryConfig()
+	cfg := config.GetRepositoryConfig()
 
 	pkg, decls := pkgloader.LoadPackageDecls(pkgPath)
 	str := structtype.GetFromDeclsByName(decls, entity)
 
-	repoConf.TemplatePath = "../../../example/template/repo.tmpl"
-	baseTemplate, err := ioutil.ReadFile(repoConf.TemplatePath)
+	cfg.TemplatePath = "../../../example/template/repo.tmpl"
+	baseTemplate, err := ioutil.ReadFile(cfg.TemplatePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	bt := string(baseTemplate)
 
-	ucGen := NewRepoGen(
+	gen := NewGen(
 		Options{
 			Package: pkgPath,
 			Entity:  entity,
 		},
-		repoConf,
+		cfg,
 		pkg,
 		str,
 	)
 
-	got, err := ucGen.Generate(bt)
+	got, err := gen.Generate(bt)
 	if err != nil {
 		log.Fatal(err)
 	}

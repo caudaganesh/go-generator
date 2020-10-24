@@ -1,4 +1,4 @@
-package usecaserunner
+package deliveryrunner
 
 import (
 	"bytes"
@@ -7,38 +7,38 @@ import (
 	"log"
 
 	"github.com/caudaganesh/go-generator/config"
-	"github.com/caudaganesh/go-generator/generator/applayer/usecase"
+	"github.com/caudaganesh/go-generator/generator/applayer/delivery"
 	"github.com/caudaganesh/go-generator/pkgloader"
 	"github.com/caudaganesh/go-generator/structtype"
 )
 
-type UCGenConf struct {
+type Conf struct {
 	Package string
 	Entity  string
 }
 
-func Run(conf UCGenConf) (io.Reader, error) {
+func Run(conf Conf) (io.Reader, error) {
 	pkg, decls := pkgloader.LoadPackageDecls(conf.Package)
 	str := structtype.GetFromDeclsByName(decls, conf.Entity)
 
-	ucConf := config.GetUseCaseConfig()
-	ucGen := usecase.NewUseCaseGen(
-		usecase.Options{
+	cfg := config.GetDeliveryConfig()
+	gen := delivery.NewGen(
+		delivery.Options{
 			Package: conf.Package,
 			Entity:  conf.Entity,
 		},
-		ucConf,
+		cfg,
 		pkg,
 		str,
 	)
 
-	baseTemplate, err := ioutil.ReadFile(ucConf.TemplatePath)
+	baseTemplate, err := ioutil.ReadFile(cfg.TemplatePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	bt := string(baseTemplate)
-	result, err := ucGen.Generate(bt)
+	result, err := gen.Generate(bt)
 
 	return bytes.NewReader(result), err
 }

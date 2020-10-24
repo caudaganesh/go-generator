@@ -37,3 +37,7 @@ This repo contains multiple golang generators
     -o, --output string    destination output of the result
     -p, --pkgName string   package name for generated proto (default "proto")
     -r, --target string    target struct
+
+### App Layer Generator
+    -p, --pkg string      package containing struct
+    -r, --target string   target struct

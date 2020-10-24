@@ -7,7 +7,7 @@ import (
 	"github.com/caudaganesh/go-generator/generator/interfacegen"
 )
 
-type InterfaceGenConf struct {
+type Conf struct {
 	PackageName  string
 	File         string
 	Package      string
@@ -16,7 +16,7 @@ type InterfaceGenConf struct {
 	Comment      string
 }
 
-func Run(conf InterfaceGenConf) (io.Reader, error) {
+func Run(conf Conf) (io.Reader, error) {
 	opt := interfacegen.Options{
 		File:         conf.File,
 		Package:      conf.Package,

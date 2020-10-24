@@ -46,7 +46,7 @@ var createInterfaceCmd = &cobra.Command{
 
 		var out io.Reader
 		var err error
-		out, err = interfacerunner.Run(interfacerunner.InterfaceGenConf{
+		out, err = interfacerunner.Run(interfacerunner.Conf{
 			PackageName:  pkgName,
 			File:         file,
 			TargetStruct: target,

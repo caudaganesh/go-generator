@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/caudaganesh/go-generator/types"
+	"github.com/iancoleman/strcase"
 )
 
 type StructType struct{ *ast.StructType }
@@ -53,6 +54,15 @@ func (s *StructType) GetPropToType() PropToType {
 		case *ast.Ident:
 			res[f.Names[0].Name] = types.GetPrimitiveType(t.Name, t.Obj)
 		}
+	}
+
+	return res
+}
+
+func (s *StructType) GetPropToCamel() PropToCamel {
+	res := make(PropToCamel, len(s.Fields.List))
+	for _, f := range s.Fields.List {
+		res[f.Names[0].Name] = strcase.ToLowerCamel(f.Names[0].Name)
 	}
 
 	return res

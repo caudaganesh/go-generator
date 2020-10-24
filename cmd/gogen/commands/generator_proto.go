@@ -38,7 +38,7 @@ var createProtoCmd = &cobra.Command{
 		goPkg, _ := cmd.Flags().GetString("goPkg")
 		output, _ := cmd.Flags().GetString("output")
 
-		out, err := protorunner.Run(protorunner.ProtoGenConf{
+		out, err := protorunner.Run(protorunner.Conf{
 			File:         file,
 			TargetStruct: target,
 			PackageName:  pkgName,

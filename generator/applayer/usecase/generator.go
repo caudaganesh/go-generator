@@ -17,7 +17,7 @@ type Options struct {
 	Entity  string
 }
 
-type UseCaseGen struct {
+type Gen struct {
 	EntityPackage     string
 	EntityPackageName string
 	Entity            string
@@ -26,14 +26,14 @@ type UseCaseGen struct {
 	config.UseCaseConfig
 }
 
-func NewUseCaseGen(
+func NewGen(
 	opt Options,
 	ucConf config.UseCaseConfig,
 	pkg *packages.Package,
 	str *structtype.StructType,
-) *UseCaseGen {
+) *Gen {
 
-	return &UseCaseGen{
+	return &Gen{
 		EntityPackage:     pkg.ID,
 		EntityPackageName: pkg.Types.Name(),
 		Entity:            opt.Entity,
@@ -44,10 +44,10 @@ func NewUseCaseGen(
 }
 
 // Generate takes in all of the fields and generate the use case
-func (t *UseCaseGen) Generate(baseTemplate string) ([]byte, error) {
+func (g *Gen) Generate(baseTemplate string) ([]byte, error) {
 	tmpl := template.Must(template.New("usecase").Parse(baseTemplate))
 	var buf bytes.Buffer
-	err := tmpl.Execute(&buf, t)
+	err := tmpl.Execute(&buf, g)
 	if err != nil {
 		log.Fatal(err)
 	}

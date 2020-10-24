@@ -12,33 +12,33 @@ import (
 	"github.com/caudaganesh/go-generator/structtype"
 )
 
-type RepoGenConf struct {
+type Conf struct {
 	Package string
 	Entity  string
 }
 
-func Run(conf RepoGenConf) (io.Reader, error) {
+func Run(conf Conf) (io.Reader, error) {
 	pkg, decls := pkgloader.LoadPackageDecls(conf.Package)
 	str := structtype.GetFromDeclsByName(decls, conf.Entity)
 
-	repoConf := config.GetRepositoryConfig()
-	ucGen := repository.NewRepoGen(
+	cfg := config.GetRepositoryConfig()
+	gen := repository.NewGen(
 		repository.Options{
 			Package: conf.Package,
 			Entity:  conf.Entity,
 		},
-		repoConf,
+		cfg,
 		pkg,
 		str,
 	)
 
-	baseTemplate, err := ioutil.ReadFile(repoConf.TemplatePath)
+	baseTemplate, err := ioutil.ReadFile(cfg.TemplatePath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	bt := string(baseTemplate)
-	result, err := ucGen.Generate(bt)
+	result, err := gen.Generate(bt)
 
 	return bytes.NewReader(result), err
 }

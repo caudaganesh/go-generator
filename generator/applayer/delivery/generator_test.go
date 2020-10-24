@@ -1,4 +1,4 @@
-package usecase
+package delivery
 
 import (
 	"fmt"
@@ -16,11 +16,12 @@ import (
 func TestGenerate(t *testing.T) {
 	pkgPath := "github.com/caudaganesh/go-generator/example/entity"
 	entity := "Product"
+	cfg := config.GetDeliveryConfig()
 
 	pkg, decls := pkgloader.LoadPackageDecls(pkgPath)
 	str := structtype.GetFromDeclsByName(decls, entity)
-	cfg := config.GetUseCaseConfig()
-	cfg.TemplatePath = "../../../example/template/usecase.tmpl"
+
+	cfg.TemplatePath = "../../../example/template/dlv.tmpl"
 	baseTemplate, err := ioutil.ReadFile(cfg.TemplatePath)
 	if err != nil {
 		log.Fatal(err)
@@ -42,7 +43,7 @@ func TestGenerate(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	want := testhelper.GetExpectFromFile("./expect.txt")
 	fmt.Println(string(got))
+	want := testhelper.GetExpectFromFile("./expect.txt")
 	assert.Equal(t, want, string(got))
 }

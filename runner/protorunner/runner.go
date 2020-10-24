@@ -7,7 +7,7 @@ import (
 	"github.com/caudaganesh/go-generator/generator/proto"
 )
 
-type ProtoGenConf struct {
+type Conf struct {
 	File         string
 	TargetStruct string
 	PackageName  string
@@ -15,7 +15,7 @@ type ProtoGenConf struct {
 	GoPackage    string
 }
 
-func Run(conf ProtoGenConf) (io.Reader, error) {
+func Run(conf Conf) (io.Reader, error) {
 	opt := proto.Options{
 		File:         conf.File,
 		TargetStruct: conf.TargetStruct,
