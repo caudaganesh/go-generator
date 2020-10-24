@@ -41,3 +41,4 @@ This repo contains multiple golang generators
 ### App Layer Generator
     -p, --pkg string      package containing struct
     -r, --target string   target struct
+    
