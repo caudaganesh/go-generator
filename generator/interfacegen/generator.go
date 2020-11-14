@@ -130,12 +130,17 @@ func getNameAndFuncDecl(fl interface{}) (string, *ast.FuncDecl) {
 		return "", fd
 	}
 
-	st := fd.Recv.
-		List[0].
-		Type.(*ast.StarExpr).
-		X.(*ast.Ident).Name
+	se, ok := fd.Recv.List[0].Type.(*ast.StarExpr)
+	if !ok {
+		return "", nil
+	}
 
-	return st, fd
+	ident, ok := se.X.(*ast.Ident)
+	if !ok {
+		return "", nil
+	}
+
+	return ident.Name, fd
 }
 
 func formatFieldList(fs *token.FileSet, fl *ast.FieldList, pkgName string) []string {
